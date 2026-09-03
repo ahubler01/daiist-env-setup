@@ -39,13 +39,11 @@ def numpy_order_revenues(quantities: np.ndarray, unit_prices: np.ndarray) -> np.
 
     Must be a vectorized operation - no Python-level for loop.
     """
-    # TODO: replace the line below
     return np.multiply(quantities, unit_prices)
 
 
 def numpy_average_order_value(quantities: np.ndarray, unit_prices: np.ndarray) -> float:
     """Return the average revenue across all orders, as a plain float."""
-    # TODO: reuse numpy_order_revenues() and take its mean
     revenues = numpy_order_revenues(quantities, unit_prices)
     return float(np.mean(revenues))
 
@@ -58,7 +56,6 @@ def pandas_revenue_by_region(sales: pd.DataFrame) -> pd.DataFrame:
     return a DataFrame with columns ["region", "revenue"] — total revenue per
     region, where revenue = quantity * unit_price.
     """
-    # TODO: add a revenue column, then group by region and sum it
     sales = sales.copy()
     sales["revenue"] = sales["quantity"] * sales["unit_price"]
     return sales.groupby("region")["revenue"].sum().reset_index()
@@ -72,7 +69,6 @@ def pandas_region_share(sales: pd.DataFrame) -> pd.DataFrame:
     Build this by merging the per-region totals from pandas_revenue_by_region()
     with the grand total (rather than hand-computing division in a loop).
     """
-    # TODO
     revenue_by_region = pandas_revenue_by_region(sales)
     total_revenue = revenue_by_region["revenue"].sum()
     revenue_by_region["share"] = revenue_by_region["revenue"] / total_revenue
@@ -87,9 +83,6 @@ def sql_revenue_by_region(csv_path: Path) -> pd.DataFrame:
     SQL equivalent of pandas_revenue_by_region(), computed with a SQL GROUP BY
     query (not by loading the table and using pandas groupby).
     """
-    # TODO: read the CSV into a DataFrame, write it into an in-memory sqlite3
-    # connection with DataFrame.to_sql(), then run a SELECT ... GROUP BY query
-    # and return the result via pd.read_sql, see the example below:
     sales = pd.read_csv(csv_path)
     with sqlite3.connect(":memory:") as connection:
         sales.to_sql("sales", connection, index=False, if_exists="replace")
@@ -111,7 +104,6 @@ def check_torch_installed() -> float:
     """Prove torch is installed and working: build a 1-D tensor [1.0, 2.0, 3.0]
     and return the sum of its elements as a plain float.
     """
-    # TODO
     tensor = torch.tensor([1.0, 2.0, 3.0])
     return float(torch.sum(tensor))
 
